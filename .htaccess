@@ -1,0 +1,16 @@
+# Block Googlebot and archive crawlers
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} (googlebot|Googlebot|archive|Archive) [NC]
+RewriteRule .* - [R=403,L]
+</IfModule>
+
+# Additional robots.txt enforcement
+<Files "robots.txt">
+Order allow,deny
+Deny from all
+</Files>
+
+# Optional: Custom 503 for maintenance (requires ErrorDocument setup)
+ErrorDocument 503 /index.html
+Header always set Retry-After "3600"
